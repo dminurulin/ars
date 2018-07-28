@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Validator;
 class UsersController extends Controller
 {
     protected $templates = [
-        'main' => 'welcome',
+        'main' => 'cabinet/main',
+        'login' => 'cabinet/temp',
         'register' => 'auth/register'
     ];
 
@@ -26,15 +27,19 @@ class UsersController extends Controller
     static function routes()
     {
             $prefix = "/toolstest";
-            Route::get($prefix.'/cabinet', 'User\UsersController@mainAction')->name('users.main');
-
-
+            Route::get($prefix.'/cabinet/', 'User\UsersController@mainAction')->name('users.main');
+            Route::get($prefix.'/cabinet/login', 'User\UsersController@loginAction')->name('users.login');
 
     }
 
     public function mainAction(Request $request)
     {
         return view($this->getTemplate('main'));
+    }
+
+    public function loginAction(Request $request)
+    {
+        return view($this->getTemplate('login'));
     }
 
 

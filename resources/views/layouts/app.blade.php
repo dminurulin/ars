@@ -73,17 +73,7 @@
 
 
         </div>
-            <div style="text-align:center; padding-top:20px;">
-                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                <!-- Инструменты-2 -->
-                <ins class="adsbygoogle"
-                     style="display:inline-block;width:728px;height:90px"
-                     data-ad-client="ca-pub-0323954385305811"
-                     data-ad-slot="4720322184"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
+
     </div>
 
             <?php #include("/usr/local/www/arsenkin.ru/tools/include/footer.php"); ?>

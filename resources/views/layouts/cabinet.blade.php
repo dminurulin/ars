@@ -21,6 +21,12 @@
         .sidebar-nav {
             padding: 9px 0;
         }
+        .flat-table {
+            padding: 10px 10px 10px 10px;
+        }
+        .form-flat {
+            padding: 10px 1px 1px 10px;
+        }
 
         @media (max-width: 980px) {
             /* Enable use of floated navbar text */
@@ -65,7 +71,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-tasks"></i> Все SEO-инструменты <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li ><a href="/tools/sp/">1. Парсинг подсветок</a></li>
-                            <li ><a href="/tools/check-top/">2. Выгрузка ТОП-10</a></li>
+                            <li ><a href="/toolstest/check-top">2. Выгрузка ТОП-10</a></li>
                             <li ><a href="/tools/filter/">3. Переоптимизация</a></li>
                             <li ><a href="/tools/check-mobile/">4. Mobile-Friendly</a></li>
                             <li ><a href="/tools/check-h/">5. Теги H1-H6</a></li>
@@ -77,23 +83,26 @@
                         </ul>
                     </li>
                 </ul>
+                @if (isset(Auth::user()->id))
                 <div class="col-md-6" style="color: white;padding: 16px;">
-                    Cуточный лимит на аккаунт: 1000,
-                    Использовано: 0 ( <a href="#">Увеличить лимит</a> )
+                    Cуточный лимит на аккаунт: {{ Auth::user()->limits_total  }},
+                    Использовано: {{ Auth::user()->limits_used	 }} ( <a href="#">Увеличить лимит</a> )
 
                 </div>
 
                 <ul id="w3" class="navbar-nav navbar-right nav" style="padding-right:20px;">
                     <li><a href="/tools/hservice/" target="_blank"><i class="fa fa-usd"></i> Donate</a></li>
-                    <li><a href="#"><i class="fa fa-user"></i> Профиль (arsenkin)</a></li>
-                    <li><a href="#" data-method="post">[<i class="fa fa-sign-out"></i> Выход]</li>
+                    <li><a href="{{ route('users.main') }}"><i class="fa fa-user"></i> Профиль ({{ Auth::user()->name	 }})</a></li>
+                    <li><a href="{{ route('logout') }}" data-method="post">[<i class="fa fa-sign-out"></i> Выход</a></li>
 
                 </ul>
-                <!-- <ul id="w3" class="navbar-nav navbar-right nav" style="padding-right:20px;">
-                    <li><a href="#"> Вход</a></li>
-                    <li><a href="#" data-method="post">Регистрация</li> -->
-
+                @else
+                <ul id="w3" class="navbar-nav navbar-right nav" style="padding-right:20px;">
+                    <li><a href="auth/login">Вход</a></li>
+                    <li><a href="{{route('auth.register')}}" data-method="post">Регистрация</a></li>
+                @endif
                 </ul>
+
             </div>
         </div>
     </div>
@@ -107,17 +116,7 @@
 
 
         </div>
-            <div style="text-align:center; padding-top:20px;">
-                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                <!-- Инструменты-2 -->
-                <ins class="adsbygoogle"
-                     style="display:inline-block;width:728px;height:90px"
-                     data-ad-client="ca-pub-0323954385305811"
-                     data-ad-slot="4720322184"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
+
     </div>
 
             <?php #include("/usr/local/www/arsenkin.ru/tools/include/footer.php"); ?>

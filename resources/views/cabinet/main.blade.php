@@ -1,68 +1,62 @@
-@extends('layouts.app')
+@extends('layouts.cabinet')
 
 @section('content')
     <br>
 <div class="container">
     <div class="row">
+        <ol style="margin-top:0px;" class="breadcrumb">
+            <li><a href="/">Главная</a></li>
+            <li><a href="/tools/">Инструменты</a></li>
+            <li><a href="/tools/cabinet/">Личный кабинет</a></li>
+            <li class="active"></li>
+        </ol>
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="auth/login">
-                        {{ csrf_field() }}
+                @if (isset(Auth::user()->id))
+                    <div class="panel-body">
+                    <p>
+                    Добропожаловать {{ Auth::user()->name  }}
+                    <p>
+                    Email : {{ Auth::user()->email  }}
+                <p>
+                Лимитов всего:{{ Auth::user()->limits_total  }}
+                <p>
+                Лимитов потрачено:{{ Auth::user()->limits_used	 }}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail </label>
+                    <p>
+                        <a href="{{ route('logout') }}">Выход</a>
+                    </div>
+                @else
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                    <div class="panel-heading">Вход</div>
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                    <div class="panel-body">
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Пароль</label>
+                            <form method="POST" action="https://arsenkin.ru/toolstest/auth/login">
+                                {{ csrf_field() }}
+                                <table class="flat-table">
+                                    <tr>
+                                        <td class="form-flat">Логин(Email):</td><td class="form-flat"> <input type="text" name="email"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="form-flat">Пароль: </td><td class="form-flat"><input type="password" name="password"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="form-flat" style="align-items: right">
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                        <input type="submit" value="Войти">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
 
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
 
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
+                @endif
 
-                                <a class="btn btn-link" href="auth/forgot">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+
             </div>
         </div>
     </div>

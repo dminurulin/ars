@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Регистрация</title>
-    <link href="/toolstest/css/bootstrap.css" rel="stylesheet">
-    <script src="/toolstest/js/jquery.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/toolstest/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
-</head>
-<body>
+@extends('layouts.cabinet')
+
+@section('content')
+    <br>
+    <br>
 <div class="container">
       {{--Ошибки--}}
     @if ($errors->has())
@@ -49,5 +42,7 @@
         <button type="submit" class="btn btn-default">Отправить</button>
     </form>
 </div>
-</body>
-</html>
+    <br>
+    <br>
+@endsection
+

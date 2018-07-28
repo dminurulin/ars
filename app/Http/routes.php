@@ -15,11 +15,11 @@ $prefix = "/toolstest";
 Route::get($prefix."/", function () {
     return view('welcome');
 });
-Route::get($prefix.'/auth/register', 'Auth\AuthController@getRegister')->name('auth.register');
-Route::post($prefix.'/auth/register', 'Auth\AuthController@postRegister');
-Route::post($prefix.'/auth/login', 'Auth\AuthController@postLogin');
-Route::get($prefix."/login", function () {
-    return view('auth/login');
-});
-//Auth::routes();
+Route::get($prefix.'/auth/login', 'Auth\AuthController@getLogin');
+Route::post($prefix.'/auth/login', 'Auth\AuthController@postLogin')->name('auth.login');;
+Route::get($prefix.'/auth/logout', 'Auth\AuthController@getLogout')->name('logout');
+Route::get($prefix.'/auth/register', 'Auth\AuthController@getRegister');
+Route::post($prefix.'/auth/register', 'Auth\AuthController@postRegister')->name('auth.register');
+
 App\Http\Controllers\User\UsersController::routes();
+App\Http\Controllers\Tools\ToolsController::routes();
