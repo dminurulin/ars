@@ -86,10 +86,10 @@ class AuthController extends Controller
             'code' => $code,
         ]);
         //Генерируем ссылку и отправляем письмо на указанный адрес
-        $url = url('/').'/toolstest/auth/activate?id='.$user->id.'&code='.$code;
+        $url = 'https://arsenkin.ru/toolstest/auth/activate?id='.$user->id.'&code='.$code;
         Mail::send('emails/registration', array('url' => $url), function($message) use ($request)
         {
-            $message->to($request->email)->subject('Registration');
+            $message->to($request->email)->subject('Registration on Arsenkin.ru')->from("robot@arsenkin.ru");
         });
 
         return 'Регистрация прошла успешно, на Ваш email отправлено письмо со ссылкой для активации аккаунта';

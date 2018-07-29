@@ -16,14 +16,13 @@
                 @if (isset(Auth::user()->id))
                     <div class="panel-body">
                     <p>
-                    Добропожаловать {{ Auth::user()->name  }}
+                    Добро пожаловать {{ Auth::user()->name  }}
                     <p>
-                    Email : {{ Auth::user()->email  }}
-                <p>
-                Лимитов всего:{{ Auth::user()->limits_total  }}
-                <p>
-                Лимитов потрачено:{{ Auth::user()->limits_used	 }}
-
+                    Login/Email : {{ Auth::user()->email  }}
+                    <p>
+                    Суточных лимитов всего: <strong>{{ Auth::user()->limits_total  }}</strong>
+                    <p>
+                    Лимитов потрачено сегодня: <strong>{{ Auth::user()->limits_used	 }}</strong>
                     <p>
                         <a href="{{ route('logout') }}">Выход</a>
                     </div>
