@@ -6,6 +6,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
+                <div class="panel-body">
                 @if (isset(Auth::user()->id))
                     Залогинились!
                 @endif
@@ -31,7 +32,7 @@
                             </tr>
                         </table>
                     </form>
-
+                </div>
             </div>
         </div>
     </div>

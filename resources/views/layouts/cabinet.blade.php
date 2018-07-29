@@ -98,7 +98,7 @@
                 </ul>
                 @else
                 <ul id="w3" class="navbar-nav navbar-right nav" style="padding-right:20px;">
-                    <li><a href="auth/login">Вход</a></li>
+                    <li><a href="{{route('auth.login')}}">Вход</a></li>
                     <li><a href="{{route('auth.register')}}" data-method="post">Регистрация</a></li>
                 @endif
                 </ul>

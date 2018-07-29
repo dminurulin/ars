@@ -21,6 +21,7 @@
             </div>
         </div>
     @endif
+    <h1>Регистарция пользователя</h1>
     <form role="form" method="post" action="/toolstest/auth/register">
         {!! csrf_field() !!}
         <div class="form-group">

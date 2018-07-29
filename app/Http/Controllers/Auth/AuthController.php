@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Code;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\CodeController;
 
 class AuthController extends Controller
 {
@@ -49,7 +53,47 @@ class AuthController extends Controller
         ]);
     }
 
+    public function activate(Request $request)
+    {
+        $res = Code::where('user_id',$request->id)
+            ->where('code',$request->code)
+            ->first();
+        if($res) {
+            //Удаляем использованный код
+            $res->delete();
+            //активируем аккаунт пользователя
+            User::find($request->id)
+                ->update([
+                    'activated'=>1,
+                ]);
+            //редиректим на страницу авторизации с сообщением об активации
+            return redirect()->to('/toolstest/cabinet')->with(['message' => 'ok']);
+        }
+        return abort(404);
+    }
 
+    public function postRegister(Request $request)
+    {
+        $validator = $this->validator($request->all());
+        if ($validator->fails()) {
+            $this->throwValidationException($request, $validator);
+        };
+        $user = $this->create($request->all());
+        //создаем код и записываем код
+        $code = CodeController::generateCode(8);
+        Code::create([
+            'user_id' => $user->id,
+            'code' => $code,
+        ]);
+        //Генерируем ссылку и отправляем письмо на указанный адрес
+        $url = url('/').'/toolstest/auth/activate?id='.$user->id.'&code='.$code;
+        Mail::send('emails/registration', array('url' => $url), function($message) use ($request)
+        {
+            $message->to($request->email)->subject('Registration');
+        });
+
+        return 'Регистрация прошла успешно, на Ваш email отправлено письмо со ссылкой для активации аккаунта';
+    }
     /**
      * Create a new user instance after a valid registration.
      *
