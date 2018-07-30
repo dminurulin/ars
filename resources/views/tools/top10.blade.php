@@ -31,7 +31,9 @@
                             <label class="col-sm-2 control-label">Регион:</label>
                             <div class="col-sm-8">
                                 <select class="form-control input-sm js-example-basic-single" name="city">
-                                    <option style="padding: 3px;" value="213">Москва</option>
+                                    @foreach($regions as $v)
+                                        <option style="padding: 3px;" value="{{ $v->code }}">{{$v->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -42,29 +44,27 @@
                                 Топ-10
                             </label>
                             <label class="btn btn-default btn-xs">
-                                <input type="radio" name="depth" id="optionsRadios1" value="20" >
+                                <input type="radio" name="depth" id="optionsRadios1" value="20" @if (($method=="post") and (($response['deep']==20)))checked @endif>
                                 Топ-20
                             </label>
                             <label class="btn btn-default btn-xs">
-                                <input type="radio" name="depth" id="optionsRadios1" value="30" >
+                                <input type="radio" name="depth" id="optionsRadios1" value="30" @if (($method=="post") and (($response['deep']==30)))checked @endif>
                                 Топ-30
                             </label>
                             <label class="btn btn-default btn-xs">
-                                <input type="radio" name="depth" id="optionsRadios1" value="50" >
+                                <input type="radio" name="depth" id="optionsRadios1" value="50" @if (($method=="post") and (($response['deep']==50)))checked @endif>
                                 Топ-50
                             </label>
                             <label class="btn btn-default btn-xs">
-                                <input type="radio" name="depth" id="optionsRadios1" value="100" >
+                                <input type="radio" name="depth" id="optionsRadios1" value="100" @if (($method=="post") and (($response['deep']==100)))checked @endif>
                                 Топ-100
                             </label>
                         </div>
                         <div class="form-group clearfix">
                             <label class="col-sm-2 control-label">Выгрузить в csv:</label>
-                            <div class="col-sm-8"><input type="checkbox" (выгружается сразу в файл csv)></div>
+                            <div class="col-sm-8"><input type="checkbox" name="csv"></div>
 
                         </div>
-
-
                         <div class="text-center">
                             <button type="submit" class="btn btn-success"> Поиск....</button>
 

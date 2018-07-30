@@ -193,6 +193,64 @@ class Top10
         return $result;
     }
 
+    public function getInfotoFile($keys,$region, $deep=10) {
+        //данные
+        $keys=explode("\n", $keys);
+        $oneBlockCount=4; //кол-во блоков в одной "строке"(в одном div)
+        $limit=100; //лимит ключевых слов
+        //кол-во сайтов в топе
+        $top=(int) $deep;
+        if (!$top) {
+            $top=10;
+        }
+
+        $count=min($limit,count($keys));
+        $blockCount=ceil($count/$oneBlockCount);
+        $delimiter=";";
+
+        //нахождение url-ов
+        $url=array();
+        $UrlColor=array();
+        $urlCount=0;
+        for ($index=0;$index<$count;$index++) {
+            $url[$index]=array();
+            if (trim($keys[$index])) {
+                $response = $this->getResponse(trim($keys[$index]), $region);
+                //checkXmlErrors();
+                $response = $this->checkXmlErrors($keys[$index], $region, $response);
+                for ($k = 0; $k < $top; $k++) {
+                    $url[$index][$k] = $response->group[$k]->doc->url . "";
+                }
+            }
+        }
+        //форматирование
+        $result="";
+        for ($i=0;$i<$blockCount;$i++) {
+            for ($j=0;$j<$oneBlockCount;$j++) {
+                $index=$i*$oneBlockCount+$j;
+                if (isset($keys[$index])) {
+                    $keys[$index] = iconv("UTF-8", "Windows-1251", $keys[$index]);
+                    $keys[$index] = str_replace("\r", "", $keys[$index]);
+                    $result .= $keys[$index];
+                    $result = substr($result, 0, strlen($result));
+                    $result .= $delimiter;
+                }
+            }
+            $result.="\n";
+            for ($k=0;$k<$top;$k++) {
+                for ($j=0;$j<$oneBlockCount;$j++) {
+                    $index=$i*$oneBlockCount+$j;
+                    if (isset($url[$index])) {
+                        $result .= $url[$index][$k] . $delimiter;
+                    }
+                }
+                $result.="\n";
+            }
+            $result.="\n";
+        }
+        return $result;
+    }
+
     private function checkXmlErrors($key, $region, $response){
         return $response;
         if($GLOBALS['responseErrorCode'] === 32 OR $GLOBALS['responseErrorCode'] === 55){
